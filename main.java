@@ -13,6 +13,8 @@ public class main {
         String inputFile = "input.txt";
         List<CarThread> carThreads = new ArrayList<>();
         Semaphore parkingSlots = new Semaphore(4);
+
+        //just to print how many car passes through each gate
         int[] gates = {0, 0, 0};
 
         // Read input from input.txt
@@ -33,7 +35,7 @@ public class main {
 
         carThreads.sort(Comparator.comparingInt(CarThread::getArrivalTime));
 
-        // Use an executor to manage threads
+        // Use an executor to manage car threads concurrently
         ExecutorService executor = Executors.newCachedThreadPool();
 
         // Track start time for accurate simulation
@@ -43,6 +45,7 @@ public class main {
             // Schedule each car thread based on its arrival time
             executor.execute(() -> {
                 try {
+                    // delay is calculated to make each car begin execution in its arrival time
                     long delay = Math.max(0, carThread.getArrivalTime() * 1000L - (System.currentTimeMillis() - simulationStartTime));
                     Thread.sleep(delay);
                     carThread.run();
