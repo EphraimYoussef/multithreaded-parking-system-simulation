@@ -45,6 +45,7 @@ public class CarThread extends Thread {
 
                 // Wait until a spot is available
                 parkingSlotsSemaphore.acquire();
+                
 
                 // Park the car
                 System.out.printf("Car %d from Gate %d parked after waiting. (Parking Status: %d spots occupied)%n",
